@@ -1,0 +1,11 @@
+# Ignore build file 
+/dist/*
+!/dist/.keep
+
+# Ignore node_modules and logfile
+/node_modules
+/yarn-error.log
+
+# Ignore Other files
+.DS_Store
+.vscode
