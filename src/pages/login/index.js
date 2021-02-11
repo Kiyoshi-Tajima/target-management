@@ -9,8 +9,7 @@ const Login = () => {
       <div>Login</div>      
       <Link to="/top">Top</Link>
       <Form />
-    </div>
-    
+    </div>    
   );
 }
 

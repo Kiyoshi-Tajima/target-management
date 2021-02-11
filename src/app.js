@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Router, Route, Switch, useLocation } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 
 // pages
 import Login from "./pages/login"; 
@@ -8,12 +8,12 @@ import Top from "./pages/top";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/top" component={Top} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

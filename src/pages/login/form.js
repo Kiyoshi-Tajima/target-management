@@ -5,15 +5,13 @@ const Form = () => {
   const [loginId, setLoginId] = useState(null);
   const [password, setPassword] = useState(null);
 
-  console.log(loginId);
-
   return (
     <div>
       <TextField 
         required 
         id="standard-required" 
         label="ログインID" 
-        defaultValue=""
+        defaultValue={loginId}
         onChange={e => setLoginId(e.target.value)}
       />
       <br/>
@@ -21,6 +19,7 @@ const Form = () => {
         id="standard-password-input"
         label="パスワード"
         type="password"
+        defaultValue={password}
         autoComplete="current-password"
         onChange={e => setPassword(e.target.value)}
       />

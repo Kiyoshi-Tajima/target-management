@@ -1,5 +1,5 @@
 // こいつがなかったら始まらない
-const webpack = require('webpack');  
+// const webpack = require('webpack');  
 // CSSを別ファイルで書き出したい
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -15,6 +15,14 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules|dist)/,
+        loader: "eslint-loader",
+        options: {
+          fix: true
+        }
+      },
       {
         test: /\.(js|jsx)$/,
         use: [{
