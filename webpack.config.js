@@ -1,14 +1,12 @@
-// こいつがなかったら始まらない
-// const webpack = require('webpack');  
-// CSSを別ファイルで書き出したい
+// CSSを別ファイルで書き出したい(必要であれば。。。)
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const path = require('path');
 const src = path.resolve(__dirname, "src");
-const dist = path.resolve(__dirname, "dist");
+const dist = path.resolve(__dirname, "public/dist");
 
 module.exports = {
-  entry: src + '/app.js',
+  entry: ['@babel/polyfill', src + '/app.js'],
   output: {
     path: dist,
     filename: "bundle.js",
@@ -33,7 +31,10 @@ module.exports = {
               // ES6のdecoratorsを使用する(Javaのアノテーションみたいなやつ)
               [require('@babel/plugin-proposal-decorators'), {legacy: true}]
             ],
-            presets: ['@babel/preset-react', '@babel/preset-env']
+            presets: [
+              ['@babel/preset-react'], 
+              ['@babel/preset-env', {"targets": {"node": true}}] // async:await対応
+            ]
           }
         }]
       },
@@ -82,7 +83,22 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    // host: "0.0.0.0",
+    host: "localhost",
+    port: "5000",
+    contentBase: path.join(__dirname, 'public'),
+    publicPath: '/dist/',
+    open: true,
+    overlay: true,
+    // headers: {
+    //   "Access-Control-Allow-Origin": "*",
+    //   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    //   "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    // },
+    proxy: {
+      '/api': 'http://localhost:3000'
+    }
   },
   plugins: [
     new MiniCssExtractPlugin({

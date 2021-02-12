@@ -1,6 +1,6 @@
 # Ignore build file 
-/dist/*
-!/dist/.keep
+public/dist/*
+!public/dist/.keep
 
 # Ignore node_modules and logfile
 /node_modules

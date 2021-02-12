@@ -7,6 +7,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/plugin-proposal-decorators": "^7.12.1",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@material-ui/core": "^4.11.0",
@@ -54,16 +55,14 @@
     "styled-components": "^5.2.1",
     "ts-loader": "^8.0.11",
     "typescript": "^4.1.2",
-    "webpack": "^5.2.0",
-    "webpack-cli": "3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-manifest-plugin": "^3.0.0-rc.0",
-    "yarn": "^1.22.10"
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {},
   "scripts": {
     "build": "NODE_ENV=production webpack --mode=production -p",
     "dev": "NODE_ENV=development webpack --watch --progress --mode=development --config webpack.config.js",
-    "start": "webpack-dev-server --mode=development --inline --watch --config webpack.config.js"
+    "start": "webpack-dev-server --config webpack.config.js"
   }
 }
