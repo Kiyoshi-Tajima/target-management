@@ -71,8 +71,6 @@ const Form = () => {
     );
   }
 
-  console.log('login form');
-
   // 各インプットコンポーネントはmmaterial-uiを使用
   return (
     <form >

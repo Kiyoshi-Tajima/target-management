@@ -1,5 +1,7 @@
 // CSSを別ファイルで書き出したい(必要であれば。。。)
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// manifest
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin'); 
 
 const path = require('path');
 const src = path.resolve(__dirname, "src");
@@ -91,18 +93,21 @@ module.exports = {
     publicPath: '/dist/',
     open: true,
     overlay: true,
-    // headers: {
-    //   "Access-Control-Allow-Origin": "*",
-    //   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-    //   "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-    // },
     proxy: {
       '/api': 'http://localhost:3000'
     }
   },
   plugins: [
+    new WebpackManifestPlugin({
+      writeToFileEmit: true
+    }),
     new MiniCssExtractPlugin({
       filename: "[name].css"
     }),
   ],
 }
+// sourceMap
+if (process.env.NODE_ENV !== 'production') {
+  module.exports.devtool = 'inline-source-map';
+}
+
