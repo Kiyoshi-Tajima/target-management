@@ -4,8 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin'); 
 
 const path = require('path');
-const src = path.resolve(__dirname, "src");
-const dist = path.resolve(__dirname, "public/dist");
+const src = path.resolve(__dirname, "app/frontend");
+const dist = path.resolve(__dirname, "app/templates/dist");
 
 module.exports = {
   entry: ['@babel/polyfill', src + '/app.js'],
@@ -89,7 +89,8 @@ module.exports = {
     // host: "0.0.0.0",
     host: "localhost",
     port: "5000",
-    contentBase: path.join(__dirname, 'public'),
+    watchContentBase: true,
+    contentBase: path.join(__dirname, 'app/templates'),
     publicPath: '/dist/',
     open: true,
     overlay: true,
@@ -98,16 +99,17 @@ module.exports = {
     }
   },
   plugins: [
-    new WebpackManifestPlugin({
-      writeToFileEmit: true
-    }),
+    // manifestファイルは現在不要なのでコメントアウト
+    // new WebpackManifestPlugin({
+    //   writeToFileEmit: true
+    // }),
     new MiniCssExtractPlugin({
       filename: "[name].css"
     }),
   ],
 }
-// sourceMap
-if (process.env.NODE_ENV !== 'production') {
-  module.exports.devtool = 'inline-source-map';
-}
+// sourceMap(思いので一旦コメントアウト)
+// if (process.env.NODE_ENV !== 'production') {
+//   module.exports.devtool = 'inline-source-map';
+// }
 
