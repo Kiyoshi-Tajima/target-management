@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { useHistory } from "react-router";
 
-
 // initialize
 const initialState  = {
   errors: {
@@ -40,7 +39,7 @@ const reducer = (state, action) => {
 
 // ここでは入力フォームをちょっと作ります。
 // useStateは使わずにuseRefとuseReducerを使ってみます。
-const Form = () => {
+const LoginForm = () => {
   // refで設定したDOMノードの参照を作成出来る
   const loginIdRef = useRef(null);
   const passwordRef = useRef(null);
@@ -61,8 +60,8 @@ const Form = () => {
     }).then(
       (response) => {
         console.log(response.date);
-        // トップ画面に遷移
-        history.push('/top');
+        // menu画面に遷移
+        history.push('/menu');
       }
     ).catch(
       (error) => {
@@ -71,10 +70,13 @@ const Form = () => {
     );
   }
 
+  console.log(state);
+
   // 各インプットコンポーネントはmmaterial-uiを使用
   return (
     <form >
-      <h1>{state.fatal === false ? 'OK' : 'NG'}</h1>
+      <h1>hogD</h1>      
+      <h1>{state.fatal === false ? 'NG' : 'OK'}</h1>
       <TextField 
         required
         inputRef={loginIdRef}
@@ -107,4 +109,4 @@ const Form = () => {
 // 今回は使用していないがpropsの属性が等価値であれば再レンダリングがされない
 // 今回はこのコンポーネントで宣言しているstate値の変化がなければ再レンダリングされない。
 // export default Form;
-export default React.memo(Form);
+export default React.memo(LoginForm);
