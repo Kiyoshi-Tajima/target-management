@@ -10,5 +10,9 @@ menu_bp = Blueprint(
 
 @menu_bp.route("/menu", methods=["GET"])
 def index():
-    """ root """
+    """ 
+        index
+        ホスティングサービスが無いのでReactを導入した
+        index.htmlを返却する
+    """
     return render_template("index.html")

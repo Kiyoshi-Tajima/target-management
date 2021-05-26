@@ -12,11 +12,17 @@ const initialState  = {
     invalid: ""
   },
   loading: false,
-  fatal: false
+  fatal: false,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SUCCESS':
+      return {
+        ...state,
+        fatal: false,
+        loading: false
+      };
     case 'LOADING':
       return {
         ...state,
@@ -25,12 +31,13 @@ const reducer = (state, action) => {
     case 'ERROR':
       return {
         ...state,
-        errors: {
-          login: action.error_message.login,
-          password: action.error_message.password,
-          invalid: action.error_message.invalid
-        },
-        loading: false
+        // errors: {
+        //   login: action.error_message.login,
+        //   password: action.error_message.password,
+        //   invalid: action.error_message.invalid
+        // },
+        fatal: true,
+        loading: false,
       };
     default:
       return state; 
@@ -50,9 +57,6 @@ const LoginForm = () => {
     const url = '/api/login';
     // ローディング状態にする
     dispatch({ type: 'LOADING' });
-    // この時点での入力値のログ
-    console.log(loginIdRef.current.value);
-    console.log(passwordRef.current.value);
 
     await axios.post(url, {
       loginId: loginIdRef.current.value,
@@ -60,28 +64,29 @@ const LoginForm = () => {
     }).then(
       (response) => {
         console.log(response.date);
+        dispatch({ type: 'SUCCESS' });
         // menu画面に遷移
         history.push('/menu');
       }
     ).catch(
       (error) => {
+        dispatch({ type: 'ERROR' });
         console.log(error.response.status);
         console.log(error.response.data)
       }
     );
   }
 
-  console.log(state);
-
   // 各インプットコンポーネントはmmaterial-uiを使用
   return (
     <form >
-      <h1>hogD</h1>      
-      <h1>{state.fatal === false ? 'NG' : 'OK'}</h1>
+      <h1>ほげほげサンプル</h1>
+
+      <h1>{state.fatal === true ? 'NG!' : 'OK!'}</h1>
       <TextField 
         required
         inputRef={loginIdRef}
-        label="ログインID"        
+        label="ログインID"
       />
       <br/>
       <TextField

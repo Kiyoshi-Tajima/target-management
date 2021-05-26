@@ -4,8 +4,9 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // Page components
-import Login from "./components/login"
-import Menu from "./components/memu"
+import Login from "./pages/login"
+import Menu from "./pages/menu"
+import Items from "./pages/items"
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route exact path="/" component={Login} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/menu" component={Menu} />
+        <Route exact path="/items" component={Items} />
       </Switch>
     </BrowserRouter>
   );

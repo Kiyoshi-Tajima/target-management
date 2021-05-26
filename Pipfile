@@ -7,6 +7,11 @@ name = "pypi"
 flask = "*"
 uwsgi = "*"
 pymysql = "*"
+sqlalchemy = "*"
+flask-sqlalchemy = "*"
+marshmallow = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
 
 [dev-packages]
 
@@ -14,4 +19,4 @@ pymysql = "*"
 python_version = "3.9"
 
 [scripts]
-start = "python app.py"
+start = "python server.py"

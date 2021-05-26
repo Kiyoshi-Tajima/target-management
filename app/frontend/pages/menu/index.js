@@ -7,6 +7,8 @@ const Menu = () => {
     <main>
       <h1>メニュー</h1>
       <Link to="/">ログインへ</Link>
+      <br/>
+      <Link to="/items">アイテム一覧</Link>
     </main>
   );
 }

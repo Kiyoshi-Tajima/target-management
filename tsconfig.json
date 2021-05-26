@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "jsx": "preserve",
+    // "allowJs": true,
+    // "declaration": false,
+    // "module": "commonjs",
+    // "outDir": "./app/templates",
+  },
+  "include": [
+    "./app/frontend/components/item.*"
+  ]
+}

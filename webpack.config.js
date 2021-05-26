@@ -5,10 +5,12 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const path = require('path');
 const src = path.resolve(__dirname, "app/frontend");
+// const src = path.resolve(__dirname, "app/frontend/components");
 const dist = path.resolve(__dirname, "app/templates/dist");
 
 module.exports = {
-  entry: ['@babel/polyfill', src + '/app.js'],
+  entry: ['@babel/polyfill', src + '/App.js'],
+  // entry: ['@babel/polyfill', src + '/item.tsx'],
   output: {
     path: dist,
     filename: "bundle.js",
@@ -23,8 +25,26 @@ module.exports = {
           fix: true
         }
       },
+      // {
+      //   test: /\.(ts|tsx)$/,
+      //   use: [
+      //     {
+      //       loader: 'thread-loader',
+      //       options: {
+      //         workers: require('os').cpus().length - 1
+      //       }
+      //     },
+      //     {
+      //       loader: 'ts-loader',
+      //       options: {
+      //         transpileOnly: true,
+      //         happyPackMode: true
+      //       }
+      //     }
+      //   ]
+      // },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: [{
           loader: "babel-loader",
           options: {
@@ -35,28 +55,11 @@ module.exports = {
             ],
             presets: [
               ['@babel/preset-react'], 
-              ['@babel/preset-env', {"targets": {"node": true}}] // async:await対応
+              ['@babel/preset-env', {"targets": {"node": true}}], // async:await対応
+              ["@babel/preset-typescript"]
             ]
           }
         }]
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        use: [
-          {
-            loader: 'thread-loader',
-            options: {
-              workers: require('os').cpus().length - 1
-            }
-          },
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-              happyPackMode: true
-            }
-          }
-        ]
       },
       {
         test: /\.css$/,
