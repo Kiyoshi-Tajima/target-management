@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // Page components
 import Login from "./pages/login"
 import Menu from "./pages/menu"
+import Users from "./pages/users"
 import Items from "./pages/items"
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/" component={Login} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/menu" component={Menu} />
+        <Route exact path="/users" component={Users} />
         <Route exact path="/items" component={Items} />
       </Switch>
     </BrowserRouter>

@@ -3,11 +3,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { getErrorCondition, getErroMessage} from "../../common/error"
 
-// initialize
+// stateの初期値
 const initialState  = {
   errors: {
-    login: "",
+    loginId: "",
     password: "",
     invalid: ""
   },
@@ -24,19 +25,26 @@ const reducer = (state, action) => {
         loading: false
       };
     case 'LOADING':
+      // ココでエラーメッセージの初期化を行う
       return {
         ...state,
-        loading: true
+        errors: {
+          loginId: "",
+          password: "",
+          invalid: "",
+        },
+        loading: true,
+        fatal: false,
       };
     case 'ERROR':
       return {
         ...state,
-        // errors: {
-        //   login: action.error_message.login,
-        //   password: action.error_message.password,
-        //   invalid: action.error_message.invalid
-        // },
-        fatal: true,
+        errors: {
+          loginId: action.payload.loginId,
+          password: action.payload.password,
+          invalid: action.payload.invalid
+        },
+        fatal: action.payload.fatal,
         loading: false,
       };
     default:
@@ -44,50 +52,56 @@ const reducer = (state, action) => {
   }
 };
 
-// ここでは入力フォームをちょっと作ります。
-// useStateは使わずにuseRefとuseReducerを使ってみます。
 const LoginForm = () => {
-  // refで設定したDOMノードの参照を作成出来る
+
   const loginIdRef = useRef(null);
   const passwordRef = useRef(null);
   const [state, dispatch] = useReducer(reducer, initialState);
   const history = useHistory();
 
-  const hoge = async () => {
+  // LOGINボタン押下時アクション
+  const  doSignIn = async () => {
     const url = '/api/login';
     // ローディング状態にする
+    // 画面にマスクとか、ここでstateの初期化とか
     dispatch({ type: 'LOADING' });
 
     await axios.post(url, {
       loginId: loginIdRef.current.value,
       password: passwordRef.current.value,
     }).then(
-      (response) => {
-        console.log(response.date);
+      () => {
+        // LOADINGでマスクをかけたあと解除したい場合とか
+        // 成功後に何かしたい場合
         dispatch({ type: 'SUCCESS' });
         // menu画面に遷移
         history.push('/menu');
       }
     ).catch(
       (error) => {
-        dispatch({ type: 'ERROR' });
-        console.log(error.response.status);
-        console.log(error.response.data)
+        if (error.response.status === 400 || error.response.status === 404 ) {
+          // エラーメッセージを取得
+          const errors = error.response.data.errors;
+          dispatch({ type: 'ERROR', payload: errors });
+        } else {
+          // その他はサーバサイドエラーとしてしまう。
+          dispatch({ type: 'ERROR', payload: {fatal: true} });
+        }
       }
     );
   }
 
-  // 各インプットコンポーネントはmmaterial-uiを使用
   return (
     <form >
-      <h1>ほげほげサンプル</h1>
-
-      <h1>{state.fatal === true ? 'NG!' : 'OK!'}</h1>
       <TextField 
         required
         inputRef={loginIdRef}
         label="ログインID"
+        variant="outlined"
+        error={getErrorCondition(state.errors, "loginId")}
+        helperText={getErroMessage(state.errors, "loginId")}
       />
+      <br/>
       <br/>
       <TextField
         required
@@ -95,24 +109,32 @@ const LoginForm = () => {
         type="password"
         autoComplete="current-password"
         inputRef={passwordRef}
+        variant="outlined"
+        error={getErrorCondition(state.errors, "password")}
+        helperText={getErroMessage(state.errors, "password")}
       />
       <br/>
-      <br/>
+      <h2>
+        {state.fatal === true ? 
+          <span style={{color: 'red'}}>サーバサイドでエラーが発生しました。</span>
+          :
+          getErrorCondition(state.errors, 'invalid') ? 
+          <span style={{color: 'red'}}>{getErroMessage(state.errors, 'invalid')}</span>
+          :
+          <span>ログインしてください。</span>
+        }
+      </h2>
       <Button 
         type="button" 
         variant="contained" 
         color="secondary"
-        onClick={() => hoge()}
+        onClick={() => doSignIn()}
       >
-        Login
+        ログイン
       </Button>
+
     </form>
   );
 }
 
-// React.memo(小技系)
-// 例えば親コンポーネントが頻繁に更新される場合に使用する
-// 今回は使用していないがpropsの属性が等価値であれば再レンダリングがされない
-// 今回はこのコンポーネントで宣言しているstate値の変化がなければ再レンダリングされない。
-// export default Form;
 export default React.memo(LoginForm);

@@ -15,7 +15,7 @@
 * Node.js
 * yarn or npm
 * python(pyenv pipenv想定)
-* DB(今後増やします)
+* mysql
 
 ## 実行前の準備
 
@@ -83,12 +83,57 @@ npm run dev
 ```webpack.config.js, package.json```を参照したり、Flask側/app配下のソースを参照すると  
 わかるかもしれません、見て調べるのものありです。
 
+## 現在のディレクトリ・ファイル構成
+
+```shell
+.
+├── Pipfile
+├── Pipfile.lock
+├── README.md
+├── app
+│   ├── __init__.py
+│   ├── frontend
+│   │   ├── App.js
+│   │   ├── components
+│   │   │   ├── Item.tsx
+│   │   │   └── ItemList.js
+│   │   └── pages
+│   │       ├── items
+│   │       │   └── index.js
+│   │       ├── login
+│   │       │   ├── LoginFrom.js
+│   │       │   └── index.js
+│   │       └── menu
+│   │           └── index.js
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── item.py
+│   │   └── user.py
+│   ├── static
+│   ├── templates
+│   │   ├── dist
+│   │   │   └── bundle.js
+│   │   └── index.html
+│   └── views
+│       ├── items.py
+│       ├── login.py
+│       └── memu.py
+├── db
+│   ├── items.sql
+│   └── users.sql
+├── db.py
+├── package.json
+├── server.py
+├── settings.py
+├── tsconfig.json
+├── webpack.config.js
+└── yarn.lock
+```
+
 ## 解説など
 
-2021年4月4日現在、大きく構成を変えてしまったため処理部分の記述を一切しておりません。  
+2021年5月27日現在、大きく構成を変えてしまったため処理部分の記述を一切しておりません。  
 ここは順次対応していきます。  
-
-ディレクトリ構成や設定ファイルなどの解説も入れていこうかと思います。
 
 ## その他
 

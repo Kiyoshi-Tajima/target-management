@@ -6,7 +6,7 @@ from marshmallow import fields
 class Item(db.Model):
     __tablename__ = 'items'
     item_id = Column(BigInteger, primary_key=True)
-    user_id = Column(BigInteger, ForeignKey('users.user_id'))
+    user_id = Column(BigInteger, ForeignKey('users.id'))
     item_name = Column(String(256))
     note = Column(Text)
     created_at = Column(DateTime)
