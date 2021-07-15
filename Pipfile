@@ -12,6 +12,9 @@ flask-sqlalchemy = "*"
 marshmallow = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+pydantic = "*"
+flask-pydantic = "*"
+flask-login = "*"
 
 [dev-packages]
 

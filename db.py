@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
-db = SQLAlchemy()
+db = SQLAlchemy(session_options={'autocommit': False, 'autoflush': False})
 ma = Marshmallow()
 
 # initialize DB Marshmallow
