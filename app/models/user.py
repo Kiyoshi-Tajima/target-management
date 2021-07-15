@@ -21,8 +21,33 @@ class User(UserMixin, db.Model):
     
     items = relationship('Item', backref='users')
 
+    # 管理者かどうか確認
     def is_administrator(self):
         return True if self.authority == AuthType.administrator else False
+    
+    # 更新時、画面からの値を設定
+    def set_update_attribute(self, params):
+        # エラーメッセージのインスタンス変数を作成
+        self.errors = {'fatal': False}
+        # ユーザ画面からくる値をインスタンスに設定
+        for key in list(params["user"].keys()):
+            setattr(self, key, params["user"][key])
+    
+    # 入力チェック
+    def valid(self):
+        validate = True
+        # 一旦ストレートに書きます。
+        if not self.login_id:
+            self.errors['login_id'] = 'ログインIDは必須入力です。'
+            validate = False
+        if not self.password:
+            self.errors['password'] = 'パスワードは必須入力です。'
+            validate = False
+        if not self.user_name:
+            self.errors['user_name'] = 'ユーザ名は必須入力です。'
+            validate = False
+            
+        return validate
     
     @classmethod
     def get_user_list(self, params):

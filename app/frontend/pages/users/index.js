@@ -89,6 +89,14 @@ const Users = () => {
         >
           検索
         </Button>
+        <Button 
+          type="button"
+          variant="contained" 
+          color="secondary"
+          onClick={() => { history.push("/users/new") }}
+        >
+          新規作成
+        </Button>
       </form>
       <br/>
       {

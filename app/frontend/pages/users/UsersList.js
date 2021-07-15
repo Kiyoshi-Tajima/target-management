@@ -1,9 +1,11 @@
 import { any } from "prop-types";
 import React from "react"
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router";
 
 const UsersList = (props) => {
   const userList = props.users;
+  const history = useHistory();
 
   return (
     <div>
@@ -18,6 +20,7 @@ const UsersList = (props) => {
               type="button"
               variant="contained" 
               color="primary"
+              onClick={() => { history.push(`/users/${user.id}`) }}
             >
               詳細
             </Button>

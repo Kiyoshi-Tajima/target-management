@@ -1,6 +1,7 @@
 """ login users API """
 from flask import Blueprint, render_template, request, jsonify
 from flask_login import login_required
+from db import db
 from ..models.user import User, UserSchema
 
 # webpackからもjsが参照できるようにflask側で調整
@@ -11,10 +12,13 @@ users_bp = Blueprint(
 )
 
 @users_bp.route("/users", methods=["GET"])
+@users_bp.route("/users/", methods=["GET"])
+@users_bp.route("/users/<path:path>", methods=["GET"])
 @login_required
-def index():
+def index(path=None):
     """ 
         index
+        /user/...でリクエストを受け取った場合
         ホスティングサービスが無いのでReactを導入した
         index.htmlを返却する
     """
@@ -36,3 +40,46 @@ def users():
     # JSONに変換
     user_schema = UserSchema()
     return jsonify({'users': user_schema.dump(users, many=True)}), 200
+
+@users_bp.route("/api/users/<int:id>", methods=["GET"])
+@login_required
+def get_user(id):
+    """
+        ユーザ情報取得
+    """
+    user = db.session.query(User).get(id)
+    
+    # 存在しない場合
+    if not user:
+        return jsonify({}), 404
+    
+    # JSONに変換
+    user_schema = UserSchema()
+    return jsonify({'user': user_schema.dump(user)}), 200
+
+@users_bp.route("/api/users/<int:id>/confirm", methods=["post"])
+@login_required
+def do_confirm(id):
+    """
+        ユーザ情報取得
+    """
+    params = request.get_json()
+    print(params);
+    
+    # modeにより分岐
+    if params["mode"] == "edit":
+        # 更新時
+        user = db.session.query(User).get(id)
+        # 値を設定
+        user.set_update_attribute(params)
+        # 検証
+        if not user.valid():
+            # だめなら400で終了
+            return jsonify(user.errors), 400
+    
+    return jsonify({}), 200
+
+@users_bp.route("/api/users/<int:id>/update", methods=["patch"])
+@login_required
+def do_update(id):
+    print(id);

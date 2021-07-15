@@ -6,9 +6,9 @@ from datetime import timedelta
 @app.before_request
 def before_request():
     print('******** new request ********')
-    # セッションの永続期間を再設定する(10分)
+    # セッションの永続期間を再設定する(30分)
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=10)
+    app.permanent_session_lifetime = timedelta(minutes=30)
     session.modified = True
 
 # エラーハンドリング
