@@ -61,7 +61,11 @@ def get_user(id):
 @login_required
 def do_confirm(id):
     """
+<<<<<<< HEAD
         ユーザ情報検証
+=======
+        ユーザ情報取得
+>>>>>>> master
     """
     params = request.get_json()
     print(params);

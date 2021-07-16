@@ -87,14 +87,22 @@ const UserForm = (props) => {
     await axios.post(url, JSON.parse(userJSON))
     .then(
       () => {
+<<<<<<< HEAD
         // エラーをリフレッシュ
         dispatch ({type: 'CONFIRM', payload: {}})
+=======
+>>>>>>> master
         setPageMode("confirm");
       }
     ).catch(
       (error) => {
         if (error.response.status === 400) {
           const errors = error.response.data;
+<<<<<<< HEAD
+=======
+
+          console.log(errors);
+>>>>>>> master
           dispatch ({type: 'CONFIRM', payload: errors})
         }
         else if (error.response.status === 404) {
