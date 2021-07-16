@@ -61,7 +61,11 @@ def get_user(id):
 @login_required
 def do_confirm(id):
     """
+<<<<<<< HEAD
+        ユーザ情報検証
+=======
         ユーザ情報取得
+>>>>>>> master
     """
     params = request.get_json()
     print(params);
@@ -82,4 +86,24 @@ def do_confirm(id):
 @users_bp.route("/api/users/<int:id>/update", methods=["patch"])
 @login_required
 def do_update(id):
-    print(id);
+    """
+        ユーザ情報検証
+    """
+    params = request.get_json()
+    print(params);
+    
+    # modeにより分岐
+    if params["mode"] == "edit":
+        # 更新時
+        user = db.session.query(User).get(id)
+        # 値を設定
+        user.set_update_attribute(params)
+        # 検証
+        if not user.valid():
+            # だめなら400で終了
+            return jsonify(user.errors), 400
+
+        # 値は設定されているのでコミットする
+        db.session.commit()
+    
+    return jsonify({}), 200

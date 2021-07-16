@@ -60,7 +60,7 @@ const LoginForm = () => {
   const history = useHistory();
 
   // LOGINボタン押下時アクション
-  const  doSignIn = async () => {
+  const doSignIn = async () => {
     const url = '/api/login';
     // ローディング状態にする
     // 画面にマスクとか、ここでstateの初期化とか
