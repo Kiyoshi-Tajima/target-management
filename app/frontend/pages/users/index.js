@@ -15,7 +15,6 @@ const Users = () => {
   const history = useHistory();
 
   const doSearch = async (data) => {
-    
     const url = "/api/users";
     const searchJSON = `{"params": ${JSON.stringify(data)}}`
     

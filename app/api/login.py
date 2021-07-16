@@ -25,6 +25,7 @@ def index():
 def do_login():
     # {'loginId': '', 'password': ''}で渡ってくる
     params = request.get_json()
+
     # なんちゃってモデルに設定
     login = Login(params)
     # とりあえず入力チェック

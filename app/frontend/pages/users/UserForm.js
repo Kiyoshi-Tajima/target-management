@@ -87,14 +87,14 @@ const UserForm = (props) => {
     await axios.post(url, JSON.parse(userJSON))
     .then(
       () => {
+        // エラーをリフレッシュ
+        dispatch ({type: 'CONFIRM', payload: {}})
         setPageMode("confirm");
       }
     ).catch(
       (error) => {
         if (error.response.status === 400) {
           const errors = error.response.data;
-
-          console.log(errors);
           dispatch ({type: 'CONFIRM', payload: errors})
         }
         else if (error.response.status === 404) {
@@ -116,7 +116,12 @@ const UserForm = (props) => {
 
     axios.patch(url, JSON.parse(userJSON))
     .then(
-
+      () => {
+        // 更新できたら詳細画面に飛ばす
+        history.push(`/users/${id}`);
+        setPageMode("show");
+      }
+      
     ).catch(
 
     );
